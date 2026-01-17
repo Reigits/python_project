@@ -32,6 +32,11 @@ sound2 = np.concatenate([
 print("Starting Edge Detector...")
 class EdgeDetector:
     def __init__(self, root:customtk.CTk) -> None:
+
+        # X and Y Speed and Dimension
+        self.x_speed:int = 3
+        self.y_speed:int = 3
+
         # Phase
         self.phase:str= 'green'
 
@@ -65,7 +70,24 @@ class EdgeDetector:
                 text_color='black'
                 )
         self.thread_mode_monitor_tab() 
+        self.dvd_anim()
         self.pack_widget()
+
+    def dvd_anim(self):
+        x_position:int = self.window.winfo_x()
+        y_position:int = self.window.winfo_y()
+        next_x:int = self.x_speed + x_position
+        next_y:int = self.y_speed + y_position
+        if (next_x + 416) >= 1920:
+            self.x_speed = -self.x_speed
+        elif next_x <= 0:
+            self.x_speed = -self.x_speed
+        if (next_y + 189) >= 1080:
+            self.y_speed = -self.y_speed
+        elif next_y <= 0:
+            self.y_speed = -self.y_speed
+        self.window.geometry(f'400x150+{next_x}+{next_y}')
+        self.window.after(24, self.dvd_anim)
 
     def pack_widget(self)->None:
         self.label.place(
@@ -89,6 +111,8 @@ class EdgeDetector:
             active_tab:list[str] = [w for w in gw.getAllTitles() if "Edge" in w]
             for window in active_tab:
                 if 'New tab' in window:
+                    continue
+                if 'Edge Tab Detector' in window:
                     continue
                 if window not in self.known_tab and self.phase=='green':
                     self.phase = 'red'
