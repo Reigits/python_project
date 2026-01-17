@@ -4,45 +4,46 @@ from tkinter import *
 class rockpaperscissor:
     def __init__(self):
 
-        #Game Dictionary
-        self.dict_game = {'rock':'scissor', 'paper':'rock', 'scissor':'paper'}
-        self.dict_image_player = {'rock':self.image_player_rock, 'paper':self.image_player_paper, 'scissor': self.image_player_scissor}
-        self.dict_image_bot = {'rock':self.image_bot_rock, 'paper':self.image_bot_paper, 'scissor': self.image_bot_scissor}        
+        #Game Variable
+        self.player_action:str= 'nothing'
+        self.bot_action:str= 'nothing'
+        self.botaction()
+        self.player_wins:int= 0
+        self.bot_wins:int= 0
 
         #The Main Window
-        self.window = Tk()
+        self.window:Tk = Tk()
         self.window.geometry('350x380')
         self.window.resizable(False,False)
         self.window.attributes('-topmost', True)
 
         #Frame
-        self.button_frame = Frame(self.window)
-        self.frame_for_image_frame = Frame(self.window)
+        self.button_frame:Frame = Frame(self.window)
+        self.frame_for_image_frame:Frame = Frame(self.window)
 
         #Pictures
         self.images_for_game()
 
+
+        #Game Dictionary
+        self.dict_game:dict[str, str]= {'rock':'scissor', 'paper':'rock', 'scissor':'paper'}
+        self.dict_image_player:dict[str, PhotoImage] = {'rock':self.image_player_rock, 'paper':self.image_player_paper, 'scissor': self.image_player_scissor}
+        self.dict_image_bot:dict[str, PhotoImage]= {'rock':self.image_bot_rock, 'paper':self.image_bot_paper, 'scissor': self.image_bot_scissor}        
+
         #Buttons and Labels
         self.labels_and_buttons()
-
-        #Game Variable
-        self.player_action = None
-        self.bot_action = None
-        self.botaction()
-        self.player_wins = 0
-        self.bot_wins = 0
 
         #Initialize Window
         self.window.mainloop()
 
     def images_for_game(self):
-        self.image_player_rock = PhotoImage(file="2Rock-paper-scissors_(rock).png")
-        self.image_player_paper = PhotoImage(file="2Rock-paper-scissors_(paper).png") 
-        self.image_player_scissor = PhotoImage(file="2Rock-paper-scissors_(scissors).png")
-        self.image_bot_rock = PhotoImage(file="mirrored2Rock-paper-scissors_(rock).png")
-        self.image_bot_paper = PhotoImage(file="mirrored2Rock-paper-scissors_(paper).png")
-        self.image_bot_scissor = PhotoImage(file="mirrored2Rock-paper-scissors_(scissors).png")
-        self.blank_image = PhotoImage(width=155, height=155)
+        self.image_player_rock:PhotoImage= PhotoImage(file="2Rock-paper-scissors_(rock).png")
+        self.image_player_paper:PhotoImage= PhotoImage(file="2Rock-paper-scissors_(paper).png") 
+        self.image_player_scissor:PhotoImage = PhotoImage(file="2Rock-paper-scissors_(scissors).png")
+        self.image_bot_rock:PhotoImage = PhotoImage(file="mirrored2Rock-paper-scissors_(rock).png")
+        self.image_bot_paper:PhotoImage = PhotoImage(file="mirrored2Rock-paper-scissors_(paper).png")
+        self.image_bot_scissor:PhotoImage = PhotoImage(file="mirrored2Rock-paper-scissors_(scissors).png")
+        self.blank_image:PhotoImage = PhotoImage(width=155, height=155)
 
     def labels_and_buttons(self):
 
@@ -52,17 +53,17 @@ class rockpaperscissor:
         rock_button = Button(master= self.button_frame, text='Rock', command=lambda:self.checkbattle('rock'))
         paper_button = Button(master= self.button_frame, text='Paper', command=lambda:self.checkbattle('paper'))
         scissor_button = Button(master= self.button_frame, text='Scissor', command=lambda:self.checkbattle('scissor'))
-        self.player_win_label = Label(text=f'Player Wins = {self.player_wins}')
-        self.bot_win_label = Label(text=f'Bot Wins = {self.bot_wins}')
-        self.win_lose_label_var = StringVar()
-        self.win_lose_label = Label(textvariable=self.win_lose_label_var)
+        self.player_win_label:Label = Label(text=f'Player Wins = {self.player_wins}')
+        self.bot_win_label:Label= Label(text=f'Bot Wins = {self.bot_wins}')
+        self.win_lose_label_var:StringVar= StringVar()
+        self.win_lose_label:Label= Label(textvariable=self.win_lose_label_var)
         player_action_label = Label(master=self.frame_for_image_frame, text='Player Action:')
         bot_action_label = Label(master=self.frame_for_image_frame, text='Bot Action:')
         rock_button.grid(row = 1, column = 1, padx = 10)
         paper_button.grid(row = 1, column = 3, padx = 10)
         scissor_button.grid(row =1 , column = 5, padx = 10)
-        self.show_image_player = Label(master=self.frame_for_image_frame, image=self.blank_image)
-        self.show_image_bot = Label(master=self.frame_for_image_frame, image=self.blank_image)
+        self.show_image_player:Label= Label(master=self.frame_for_image_frame, image=self.blank_image)
+        self.show_image_bot:Label= Label(master=self.frame_for_image_frame, image=self.blank_image)
 
         #Packing All Widgets
         main_label.pack()
@@ -76,7 +77,7 @@ class rockpaperscissor:
         self.show_image_player.grid(row = 1,column = 1)
         self.show_image_bot.grid(row = 1,column = 2, padx = 32)
 
-    def checkbattle(self, choice): #To Calculate the Battle
+    def checkbattle(self, choice:str): #To Calculate the Battle
         
         #Game Logic
         self.player_action = choice
