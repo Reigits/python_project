@@ -109,7 +109,6 @@ class EdgeDetector:
     def monitor_edge_tabs(self):
         while True:
             active_tab:list[str] = [w for w in gw.getAllTitles() if "Edge" in w]
-            print(active_tab)
             for window in active_tab:
                 if 'New tab' in window:
                     continue
