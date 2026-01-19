@@ -87,7 +87,7 @@ class EdgeDetector:
         elif next_y <= 0:
             self.y_speed = -self.y_speed
         self.window.geometry(f'400x150+{next_x}+{next_y}')
-        self.window.after(24, self.dvd_anim)
+        self.window.after(10, self.dvd_anim)
 
     def pack_widget(self)->None:
         self.label.place(
@@ -109,10 +109,15 @@ class EdgeDetector:
     def monitor_edge_tabs(self):
         while True:
             active_tab:list[str] = [w for w in gw.getAllTitles() if "Edge" in w]
+            print(active_tab)
             for window in active_tab:
                 if 'New tab' in window:
                     continue
                 if 'Edge Tab Detector' in window:
+                    continue
+                if 'Untitled' in window:
+                    continue
+                if 'bing.com' in window:
                     continue
                 if window not in self.known_tab and self.phase=='green':
                     self.phase = 'red'
